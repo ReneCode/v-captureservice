@@ -15,13 +15,14 @@ describe("capture REST interface", () => {
 
 
   const URL = `${host}/api/v1/captures`;
+  const projectId = "test-project";
+  const pageId = "test-page";
 
-  it("post", () => {
-
+  it("post / capture picture", () => {
     const data = {
-      projectId: "aa7c8e1e-0ced-4c4e-a436-0828b8bb1138",
-      pageId: "e79687f9-49c3-43eb-84ea-4a88755487de",
-      url: "http://v-project.azurewebsites.net/project/aa7c8e1e-0ced-4c4e-a436-0828b8bb1138/page/e79687f9-49c3-43eb-84ea-4a88755487de",
+      projectId,
+      pageId,
+      url: "http://www.google.com",
       viewportSize: { width: 400, height: 300 },
       filePath: "capture.png"
     }
@@ -29,6 +30,16 @@ describe("capture REST interface", () => {
       res.should.be.not.null;
       res.data.should.be.a('string');
     });
+  }).timeout(5000);
+
+  it("get / get captured picture", () => {
+    const url = `${URL}/${projectId}/${pageId}`;
+    return axios.get(url).then(res => {
+      res.should.be.not.null;
+      res.data.should.be.not.null;
+      res.headers.should.have.property('content-type', 'image/png');
+    });
   });
+
 })
 

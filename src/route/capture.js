@@ -28,7 +28,6 @@ class Capture {
     let phantomArgs = [phantomScript, JSON.stringify(options)];
 
     let phantomProc = crossSpawn.spawn(phantomPath, phantomArgs);
-
     phantomProc.on('exit', (code) => {
       callback(code);
     })
