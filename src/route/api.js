@@ -23,7 +23,7 @@ function getCapture(req, res) {
     res.end();
   })
   .catch( (err) => {
-    console.error(err);
+    // console.error(err);
     res.sendStatus(500);
   })
 }
