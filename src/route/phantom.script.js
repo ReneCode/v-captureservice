@@ -15,8 +15,8 @@ if (!options.url) {
   console.log("url missing");
   phantom.exit(1);
 }
-if (!options.fileName) {
-  console.log("fileName missing");
+if (!options.filePath) {
+  console.log("filePath missing");
   phantom.exit(1);
 }
 
@@ -34,7 +34,7 @@ page.onLoadFinished = function (status) {
 
 function onPageReady() {
   console.log("start render");
-  page.render(options.fileName);
+  page.render(options.filePath);
   phantom.exit();
 }
 

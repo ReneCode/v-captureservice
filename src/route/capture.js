@@ -5,18 +5,18 @@ let fs = require('fs');
 class Capture {
 
   take(options, callback) {
-    this.removeFile(options.fileName, () => {
+    this.removeFile(options.filePath, () => {
       this.spanPhantom(options, callback);
     })
   }
 
   // --------------
 
-  removeFile(fileName, callback) {
-    if (!fileName) {
+  removeFile(filePath, callback) {
+    if (!filePath) {
       callback();
     }
-    fs.unlink(fileName, (err) => {
+    fs.unlink(filePath, (err) => {
       return callback();
     });
   }
