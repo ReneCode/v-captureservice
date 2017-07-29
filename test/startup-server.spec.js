@@ -2,7 +2,7 @@ var WebServer = require('../src/web-server');
 let dataStorage = require('../src/datastorage/datastorage');
 
 const OPTIONS = {
-  port: 3003,
+  port: 3103,
   authorize: false,
   logging: false
 };
