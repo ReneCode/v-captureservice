@@ -8,17 +8,23 @@ let Capture = require('./capture')
 let dataStorage = require('../datastorage/datastorage');
 
 
-function getFileName(projectId, pageId) {
-  const fileName = `capture_${projectId}_${pageId}.png`;
+function getFileName(pageId) {
+  const fileName = `capture/${pageId}.png`;
   return fileName.toLowerCase();
+}
+
+function getContainerName(projectId) {
+  return "prj-" + projectId;
 }
 
 function getCapture(req, res) {
   const projectId = req.params.projectId;
   const pageId = req.params.pageId;
 
-  const fileName = getFileName(projectId, pageId);
-  dataStorage.loadCapture(fileName, res)
+  const containerName = getContainerName(projectId);
+  const fileName = getFileName(pageId);
+  console.log("***", containerName, fileName)
+  dataStorage.loadCapture(containerName, fileName, res)
   .then( () => {
     res.end();
   })
@@ -38,8 +44,9 @@ function takeCapture(req, res) {
   const url = req.body.url;
 
   const viewportSize = req.body.viewportSize || { width: 300, height: 200 };
-  const fileName = getFileName(projectId, pageId);
 
+  const containerName = getContainerName(projectId);
+  const fileName = getFileName(pageId);
   const filePath = path.join(os.tmpdir(), fileName);
 
   const options = {
@@ -54,10 +61,9 @@ function takeCapture(req, res) {
     if (err) {
       res.sendStatus(409);
     } else {
-      dataStorage.saveCapture(fileName, filePath)
+      dataStorage.saveCapture(containerName, fileName, filePath)
         .then(() => {
           res.sendStatus(200);
-
         })
         .catch(() => {
           res.sendStatus(409);

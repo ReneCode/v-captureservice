@@ -2,28 +2,22 @@ let azure = require('azure-storage');
 
 class DataStorage {
     constructor() {
-        this.container = "capture";
     }
 
     connect(connectionString) {
         return new Promise((resolve, reject) => {
             try {
                 this.blobService = azure.createBlobService(connectionString);
-                this.blobService.createContainerIfNotExists(this.container, (err) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    resolve();
-                });
+                resolve();
             } catch (err) {
                 reject(err);
             }
         });
     }
 
-    saveCapture(fileName, filePath) {
+    saveCapture(containerName, fileName, filePath) {
         return new Promise((resolve, reject) => {
-            this.blobService.createBlockBlobFromLocalFile(this.container, fileName, filePath, (err) => {
+            this.blobService.createBlockBlobFromLocalFile(containerName, fileName, filePath, (err) => {
                 if (err) {
                     reject(err);
                 }
@@ -32,9 +26,9 @@ class DataStorage {
         });
     }
 
-    loadCapture(fileName, stream) {
+    loadCapture(containerName, fileName, stream) {
         return new Promise((resolve, reject) => {
-            this.blobService.getBlobToStream(this.container, fileName, stream, (err) => {
+            this.blobService.getBlobToStream(containerName, fileName, stream, (err) => {
                 if (err) {
                     reject(err);
                 }
