@@ -17,12 +17,17 @@ class DataStorage {
 
     saveCapture(containerName, fileName, filePath) {
         return new Promise((resolve, reject) => {
-            this.blobService.createBlockBlobFromLocalFile(containerName, fileName, filePath, (err) => {
+            this.blobService.createContainerIfNotExists(containerName, (err) => {
                 if (err) {
                     reject(err);
                 }
-                resolve();
-            });
+                this.blobService.createBlockBlobFromLocalFile(containerName, fileName, filePath, (err) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve();
+                });
+            })
         });
     }
 

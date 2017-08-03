@@ -15,8 +15,8 @@ describe("capture REST interface", () => {
 
 
   const URL = `${host}/api/v1/captures`;
-  const projectId = "test-project";
-  const pageId = "test-page";
+  const projectId = "unit-test-project";
+  const pageId = "unit-test-page";
 
   it("post / capture picture", () => {
     const data = {

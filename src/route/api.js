@@ -23,7 +23,6 @@ function getCapture(req, res) {
 
   const containerName = getContainerName(projectId);
   const fileName = getFileName(pageId);
-  console.log("***", containerName, fileName)
   dataStorage.loadCapture(containerName, fileName, res)
   .then( () => {
     res.end();
